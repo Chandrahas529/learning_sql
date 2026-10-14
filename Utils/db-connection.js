@@ -4,8 +4,34 @@ const connection = mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"admin1234",
-    database: "testdb"
+    database: "busbookingsystem"
 })
+
+const users = [
+    ["Rahul Sharma", "rahul@gmail.com"],
+    ["Priya Verma", "priya@gmail.com"],
+    ["Amit Kumar", "amit@gmail.com"],
+    ["Sneha Patel", "sneha@gmail.com"],
+    ["Rohit Singh", "rohit@gmail.com"],
+    ["Anjali Gupta", "anjali@gmail.com"],
+    ["Vikas Yadav", "vikas@gmail.com"],
+    ["Neha Mishra", "neha@gmail.com"],
+    ["Karan Mehta", "karan@gmail.com"],
+    ["Pooja Sahu", "pooja@gmail.com"]
+];
+
+const buses = [
+    [101, 40, 40],
+    [102, 50, 45],
+    [103, 35, 30],
+    [104, 45, 40],
+    [105, 36, 20],
+    [106, 34, 20],
+    [107, 55, 50],
+    [108, 42, 35],
+    [109, 48, 40],
+    [110, 30, 25]
+];
 
 connection.connect((err)=>{
     if(err){
@@ -13,6 +39,32 @@ connection.connect((err)=>{
         return ;
     }
     console.log("Connection has been created.")
+
+    const insertUserQuery = `INSERT INTO users (name, email)
+        VALUES (?,?)`;
+
+    users.forEach(user=>{
+        connection.execute(insertUserQuery, [user[0],user[1]], (err, result) => {
+            if (err) {
+                console.log("Error inserting users:", err.message);
+                return;
+            }
+            console.log("Sample data added successfully!")
+        })
+    })
+
+    const insertBusQuery = `INSERT INTO buses (busNumber,totalSeats,availableSeats)
+        VALUES (?,?,?)`;
+
+    buses.forEach(bus=>{
+        connection.execute(insertBusQuery, [bus[0],bus[1],bus[2]], (err, result) => {
+            if (err) {
+                console.log("Error inserting buses:", err.message);
+                return;
+            }
+            console.log("Sample data added successfully!")
+        })
+    })
 
     // const UsersQuery = `create table Users(
     //     id INT AUTO_INCREMENT PRIMARY KEY,
